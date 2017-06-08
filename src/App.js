@@ -1,21 +1,45 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Webcam from "react-webcam";
 
-class App extends Component {
+import "./App.css";
+
+export default class App extends Component {
+  constructor(...args) {
+    super(...args);
+
+    this.state = {
+      width: 0,
+      height: 0,
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }
+  setRef = webcam => {
+    this.webcam = webcam;
+  };
+
+  capture = () => {
+    const imageSrc = this.webcam.getScreenshot();
+    this.setState({ imageSrc });
+  };
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Webcam
+          audio={false}
+          height={this.state.width}
+          ref={this.setRef}
+          screenshotFormat="image/jpeg"
+          width={this.state.height}
+        />
+        <button onClick={this.capture}>Capture photo</button>
+        {this.state.imageSrc && <img src={this.state.imageSrc} alt="Slefie" />}
       </div>
     );
   }
 }
-
-export default App;
