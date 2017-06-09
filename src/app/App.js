@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
 import getPixels from "get-pixels";
+import getCenterish from "../Helpers/getCenterish.js";
 import "./App.css";
 import Button from "../button";
 
@@ -37,16 +38,15 @@ export default class App extends Component {
 
   capture = () => {
     const imageSrc = this.webcam.getScreenshot();
+
     getPixels(imageSrc, (err, pix) => {
       if (err) {
         console.error("Bad image path");
         return;
       }
 
-      console.log("got pixels", pix);
-      console.log(pix.data);
       this.setState({
-        rgb: pix.data.slice(0, 3),
+        rgb: getCenterish(pix),
       });
     });
   };
@@ -69,8 +69,9 @@ export default class App extends Component {
         />
         <Button onClick={this.capture} />
         <h1 style={hh}>
-          Hedinn
+          {`${this.state.rgb[0]}, ${this.state.rgb[1]}, ${this.state.rgb[2]}`}
         </h1>
+        <div className="pointer" />
       </div>
     );
   }

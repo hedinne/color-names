@@ -1,9 +1,9 @@
 .button {
   position: absolute;
-  bottom: 10%;
+  bottom: 38px;
   left: calc(50% - 38px);
 
-  background-color: transparent;
+  background-color: var(--bg-color);
 
   border: 2px solid #eee;
   border-radius: 50%;

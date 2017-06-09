@@ -1,2 +1,9 @@
-.App {
+.pointer {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: calc(50% - 7px);
+  border: 2px solid pink;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
 }
