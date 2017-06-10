@@ -1,9 +1,24 @@
-.pointer {
+.app__pointer {
   position: absolute;
-  top: calc(50% - 7px);
-  left: calc(50% - 7px);
-  border: 2px solid pink;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
+  top: calc(50% - 13px);
+  left: calc(50% - 13px);
+  border: 2px solid var(--text-color);
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  transform: rotate(-45deg);
+  width: 14px;
+  height: 14px;
+}
+
+.app__heading {
+  position: absolute;
+  display: block;
+  top: 0;
+
+  width: 100%;
+
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #eee;
 }

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Webcam from "react-webcam";
 import getPixels from "get-pixels";
+import namer from "color-namer";
 import getCenterish from "../Helpers/getCenterish.js";
+import { rgbToHex } from "../Helpers/ColorNames.js";
 import "./App.css";
 import Button from "../button";
 
@@ -12,7 +14,7 @@ export default class App extends Component {
     this.state = {
       width: 0,
       height: 0,
-      rgb: [0, 0, 0, 0],
+      name: "",
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -44,20 +46,17 @@ export default class App extends Component {
         console.error("Bad image path");
         return;
       }
+      const rgb = getCenterish(pix);
 
+      const name = namer(rgbToHex(rgb[0], rgb[1], rgb[2]));
       this.setState({
-        rgb: getCenterish(pix),
+        //rgb: rgbToHex(rgb[0], rgb[1], rgb[2]).toUpperCase(),
+        name: name.ntc[0].name,
       });
     });
   };
 
   render() {
-    const hh = {
-      color: `rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state
-        .rgb[2]})`,
-      position: "absolute",
-      top: 0,
-    };
     return (
       <div>
         <Webcam
@@ -68,10 +67,8 @@ export default class App extends Component {
           width={this.state.width}
         />
         <Button onClick={this.capture} />
-        <h1 style={hh}>
-          {`${this.state.rgb[0]}, ${this.state.rgb[1]}, ${this.state.rgb[2]}`}
-        </h1>
-        <div className="pointer" />
+        <h1 className="app__heading">{this.state.name}</h1>
+        <div className="app__pointer" />
       </div>
     );
   }

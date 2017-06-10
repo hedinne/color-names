@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "color-namer": "^1.1.0",
     "get-pixels": "^3.3.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-webcam": "^0.2.0"
+    "react-webcam": "^0.2.0",
+    "yarn": "^0.24.5"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"
