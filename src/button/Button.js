@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "./Button.css";
 
 const Button = ({ onClick }) =>
-  <button className="button" onClick={onClick}>
+  <button className="button" onClick={onClick} name="Name that color">
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

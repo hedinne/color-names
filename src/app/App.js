@@ -6,6 +6,7 @@ import getCenterish from "../Helpers/getCenterish.js";
 import { rgbToHex } from "../Helpers/ColorNames.js";
 import "./App.css";
 import Button from "../button";
+import Top from "../top";
 
 export default class App extends Component {
   constructor(...args) {
@@ -14,7 +15,6 @@ export default class App extends Component {
     this.state = {
       width: 0,
       height: 0,
-      name: "",
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -22,6 +22,10 @@ export default class App extends Component {
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
+    // navigator.mediaDevices
+    //   .enumerateDevices()
+    //   .then(device => device.filter(i => i.kind === "videoinput"))
+    //   .then(i => console.log(i));
   }
 
   componentWillUnmount() {
@@ -47,11 +51,21 @@ export default class App extends Component {
         return;
       }
       const rgb = getCenterish(pix);
+      const hex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+      const name = namer(hex);
+      console.log(name);
+      document.documentElement.style.setProperty("--title-color", hex);
+      const accuracy =
+        name.ntc[0].distance / name.ntc[name.ntc.length - 1].distance;
 
-      const name = namer(rgbToHex(rgb[0], rgb[1], rgb[2]));
       this.setState({
-        //rgb: rgbToHex(rgb[0], rgb[1], rgb[2]).toUpperCase(),
         name: name.ntc[0].name,
+        colorData: [
+          name.ntc[0].name,
+          hex.toUpperCase(),
+          `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`,
+          `Accuracy: ${Math.round((100 - accuracy) * 100) / 100}%`,
+        ],
       });
     });
   };
@@ -59,6 +73,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <Top title="Color Names" data={this.state.colorData} />
         <Webcam
           audio={false}
           height={this.state.height}
@@ -67,7 +82,6 @@ export default class App extends Component {
           width={this.state.width}
         />
         <Button onClick={this.capture} />
-        <h1 className="app__heading">{this.state.name}</h1>
         <div className="app__pointer" />
       </div>
     );
