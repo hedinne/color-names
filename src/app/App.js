@@ -17,6 +17,7 @@ export default class App extends Component {
       height: 0,
     };
     this.updateDimensions = this.updateDimensions.bind(this);
+    this.setBackAndForgroundColor = this.setBackAndForgroundColor.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,23 @@ export default class App extends Component {
     this.webcam = webcam;
   };
 
+  setBackAndForgroundColor(rgb) {
+    const theDecider = Math.round(
+      (parseInt(rgb[0], 10) * 299 +
+        parseInt(rgb[1], 10) * 587 +
+        parseInt(rgb[2], 10) * 114) /
+        1000,
+    );
+
+    const hex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+    document.documentElement.style.setProperty("--bg-color", hex);
+    if (theDecider > 125) {
+      document.documentElement.style.setProperty("--font-color", "#000000");
+    } else {
+      document.documentElement.style.setProperty("--font-color", "#FFFFFF");
+    }
+  }
+
   capture = () => {
     const imageSrc = this.webcam.getScreenshot();
 
@@ -50,11 +68,13 @@ export default class App extends Component {
         console.error("Bad image path");
         return;
       }
+
       const rgb = getCenterish(pix);
       const hex = rgbToHex(rgb[0], rgb[1], rgb[2]);
       const name = namer(hex);
-      console.log(name);
-      document.documentElement.style.setProperty("--title-color", hex);
+
+      this.setBackAndForgroundColor(rgb);
+
       const accuracy =
         name.ntc[0].distance / name.ntc[name.ntc.length - 1].distance;
 
@@ -72,17 +92,21 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <Top title="Color Names" data={this.state.colorData} />
-        <Webcam
-          audio={false}
-          height={this.state.height}
-          ref={this.setRef}
-          screenshotFormat="image/jpeg"
-          width={this.state.width}
-        />
-        <Button onClick={this.capture} />
+        <div className="app__video">
+          <Webcam
+            audio={false}
+            height={this.state.height - 160}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={this.state.width}
+          />
+        </div>
         <div className="app__pointer" />
+        <div className="app__button">
+          <Button onClick={this.capture} />
+        </div>
       </div>
     );
   }

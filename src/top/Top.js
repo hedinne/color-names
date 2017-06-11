@@ -37,7 +37,7 @@ export default class Top extends Component {
 
   render() {
     const { title, data } = this.props;
-    console.log(this.state.nr);
+
     return (
       <div className="top">
         {data &&
@@ -54,7 +54,7 @@ export default class Top extends Component {
               viewBox="0 0 24 24"
             >
               <path
-                fill="#eee"
+                className="top__svg"
                 d="M15.422 16.078l-1.406 1.406-6-6 6-6 1.406 1.406-4.594 4.594z"
               />
             </svg>
@@ -78,7 +78,7 @@ export default class Top extends Component {
               viewBox="0 0 24 24"
             >
               <path
-                fill="#eee"
+                className="top__svg"
                 d="M8.578 16.359l4.594-4.594-4.594-4.594 1.406-1.406 6 6-6 6z"
               />
             </svg>

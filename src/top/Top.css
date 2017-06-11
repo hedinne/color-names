@@ -1,6 +1,9 @@
 .top {
   background-color: var(--bg-color);
+  transition: background-color var(--timing);
   display: flex;
+  align-items: center;
+  height: 80px;
 }
 
 .top__heading {
@@ -8,8 +11,11 @@
   text-align: center;
   font-family: sans-serif;
   font-weight: 500;
+  font-size: 1.3em;
   letter-spacing: 0.05em;
-  color: var(--text-color);
+  color: var(--font-color);
+  transition: color var(--timing);
+  margin: auto;
 }
 
 .top__arrow {
@@ -18,4 +24,10 @@
   margin: 0 2vw;
   background-color: transparent;
   border: none;
+  margin: auto;
+}
+
+.top__svg {
+  fill: var(--font-color);
+  transition: fill var(--timing);
 }
