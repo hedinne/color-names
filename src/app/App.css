@@ -6,6 +6,9 @@
 
 .app__video {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .app__pointer {
@@ -21,6 +24,19 @@
 }
 
 .app__button {
+  display: flex;
+  align-items: center;
   min-height: 80px;
   margin: auto;
+}
+
+.app__placeholder {
+  position: absolute;
+  width: 75%;
+  height: 75%;
+}
+
+.app__svg {
+  fill: var(--font-color);
+  opacity: 0.7;
 }
