@@ -147,7 +147,7 @@ export default class App extends Component {
         </div>
         {this.state.cameraAllowed && <div className="app__pointer" />}
         <div className="app__button">
-          {this.state.videoSources.length > 22 &&
+          {this.state.videoSources.length > 22 && // 22 just to disable. Set to 2 when videoSource
             <button className="app__switch" onClick={this.rotateSources}>
               <svg
                 version="1.1"

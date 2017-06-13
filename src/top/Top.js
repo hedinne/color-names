@@ -19,6 +19,22 @@ export default class Top extends Component {
     data: PropTypes.array,
   };
 
+  componentDidMount() {
+    window.addEventListener("keyup", this.onKeyUp.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keyup", this.onKeyUp.bind(this));
+  }
+
+  onKeyUp(e) {
+    if (e.which === 39) {
+      this.onRight();
+    } else if (e.which === 37) {
+      this.onLeft();
+    }
+  }
+
   onLeft() {
     if (this.state.nr > 0) {
       this.setState({ nr: this.state.nr - 1 });
