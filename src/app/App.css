@@ -13,7 +13,7 @@
 
 .app__pointer {
   position: absolute;
-  top: calc(50% - 13px);
+  top: 50%;
   left: calc(50% - 13px);
   border: 2px solid var(--font-color);
   border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
@@ -39,4 +39,11 @@
 .app__svg {
   fill: var(--font-color);
   opacity: 0.7;
+}
+.app__switch {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  left: 15%;
+  transform: scale(1.2);
 }

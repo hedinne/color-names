@@ -16,19 +16,24 @@ export default class App extends Component {
       width: 0,
       height: 0,
       cameraAllowed: false,
+      videoSources: ["default"],
     };
     this.updateDimensions = this.updateDimensions.bind(this);
     this.setBackAndForgroundColor = this.setBackAndForgroundColor.bind(this);
     this.onMediaStream = this.onMediaStream.bind(this);
+    this.rotateSources = this.rotateSources.bind(this);
   }
 
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
-    // navigator.mediaDevices
-    //   .enumerateDevices()
-    //   .then(device => device.filter(i => i.kind === "videoinput"))
-    //   .then(i => console.log(i));
+
+    let videoSources = [];
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then(device => device.filter(i => i.kind === "videoinput"))
+      .then(i => i.forEach(d => videoSources.push(d.deviceId)));
+    this.setState({ videoSources });
   }
 
   componentWillUnmount() {
@@ -46,6 +51,11 @@ export default class App extends Component {
       width: window.innerWidth,
       height: window.innerHeight,
     });
+  }
+  rotateSources() {
+    let videoSources = this.state.videoSources;
+    videoSources.push(videoSources.shift());
+    this.setState({ videoSources });
   }
   setRef = webcam => {
     this.webcam = webcam;
@@ -113,6 +123,7 @@ export default class App extends Component {
             screenshotFormat="image/jpeg"
             width={this.state.width}
             onUserMedia={this.onMediaStream}
+            videoSource={this.state.videoSources[0]}
           />
           {!this.state.cameraAllowed &&
             <svg
@@ -136,6 +147,22 @@ export default class App extends Component {
         </div>
         {this.state.cameraAllowed && <div className="app__pointer" />}
         <div className="app__button">
+          {this.state.videoSources.length > 22 &&
+            <button className="app__switch" onClick={this.rotateSources}>
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  className="app__svg"
+                  d="M6.984 2.016v10.5c0-1.688 3.328-2.531 5.016-2.531s5.016 0.844 5.016 2.531v-10.5h-10.031zM17.016 0c1.078 0 1.969 0.938 1.969 2.016v13.969c0 1.078-0.891 2.016-1.969 2.016h-7.031l3 3-3 3v-2.016h-4.969v-1.969h4.969v-2.016h-3c-1.078 0-1.969-0.938-1.969-2.016v-13.969c0-1.078 0.891-2.016 1.969-2.016h10.031zM12 8.016c-1.078 0-1.969-0.938-1.969-2.016s0.891-2.016 1.969-2.016 2.016 0.938 2.016 2.016-0.938 2.016-2.016 2.016zM14.016 20.016h4.969v1.969h-4.969v-1.969z"
+                />
+              </svg>
+            </button>}
+
           <Button onClick={this.capture} />
         </div>
       </div>
